@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script>
+        var module=angular.module("myKuchModule",[]);
+    
+       
+        var controller=module.controller("myKuchController",function($scope,$http)
+        {
+            var active=localStorage.getItem("au");
+            $("#eemail").val(active).prop("readonly",true); 
+
+            $scope.eemail=active;
+
+            $scope.getAll=function(eemail)
+                {
+                    let url="/fetch-all-bookings?eemail="+eemail;
+                    $http.get(url).then(allIsWell,notWell);
+
+                    function allIsWell(response)
+                    {
+                        // alert(JSON.stringify(response.data)) ;
+                        $scope.jsonArrayAll=response.data;
+  
+                    }
+                    function notWell(err)
+                    {
+                        alert(err) 
+                    }
+                } 
+
+
+                $scope.doDelete=function(rid)
+                {   
+                    
+                    let url="/del-one-1?rid="+rid;
+
+                    $http.get(url).then(allIsWell,notWell);
+
+                    function allIsWell(response)
+                    {
+                        alert(response.data);
+                        $scope.getAll();
+
+                    }
+                    function notWell(err)
+                    {
+                        alert(err)
+                    }
+                }
+
+        });
+    </script>
+
+<script>
+    $(document).ready(function()
+    {
+        // var active=localStorage.getItem("au");
+        //     $("#eemail").val(active)
+        //     // .prop("readonly",true); 
+
+
+   $("#back").click(function(){
+       location.href="inf-desh";
+       });
+   
+   });
+   
+   </script>
+    </head>
+
+
+   
+    
+
+    <body ng-app="myKuchModule" ng-controller="myKuchController" >
+
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">
+                <img src="pics/logu.png" alt="Logo" width="30" height="28"  class="d-inline-block align-text-top">
+                Trendsetters Hub
+              </a> 
+             
+                <div class="p-2">               
+                   <button class="btn btn-outline" type="button" style="margin-left:10px" 
+                  id="back"; >back</button>
+                </div>
+            </div>   
+        </nav> 
+        
+        <input type="text" id="eemail"  ng-model="eemail"  />
+            
+
+        </h1>
+        
+        <div class="container-fluid"> 
+            <div class="container "> <hr>
+                    <div class="row ">
+
+
+
+                        <input type="button" value="Show ALL" ng-click="getAll(eemail);">
+
+                        <table width="700" border="1" class="table" >
+                            <tr>
+                             <th>Sr.No</th>
+                             <th>Email ID</th>
+                             <th>title</th>
+                             <th>date</th>
+                             <th>time</th>
+                             <th>city</th>
+                             <th>venue</th>
+                             
+                            </tr> 
+                            <tr ng-repeat="obj in jsonArrayAll">
+                                 <td>
+                                    {{$index+1}}
+                                </td>
+                                 <td >
+                                     {{obj.eemail}}
+                                 </td>
+                                 <td>
+                                     {{obj.etitle}}
+                                 </td>
+                                 <td>
+                                     {{obj.edate}}
+                                 </td>
+                                 <td>
+                                     {{obj.etime}}
+                                 </td>
+                                 <td>
+                                    {{obj.ecity}}
+                                </td>
+                                <td>
+                                    {{obj.evenue}}
+                                </td>
+                               <td>
+                                    <center>
+                                        <input type="button" value="delete" ng-click="doDelete(obj.rid);">                               
+                                    </center>
+                                 </td>
+                            </tr>
+         
+                     </table>
+        
+
+
+                    </div>                
+            </div>
+        </div>
+
+
+    </body>
+</html>
+

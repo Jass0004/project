@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+     
+    <script>
+      $(document).ready(function()
+      {
+      //-----------------on load function----------------------------- 
+        let active=localStorage.getItem("au");
+        alert(active);   
+        $("#dash").html("id:"+active); 
+        $("#femail").val(active).prop("readonly",true); 
+        $("#eemail").val(active).prop("readonly",true); 
+
+
+      // -------------------script for booked event----------------------
+      $("#post-event").click(function(){
+          // alert("obj");
+          let obj=
+          {  
+              type:"get",
+              url:"/booking-process",
+              data:{
+                  eemail:$("#eemail").val(),
+                  etitle:$("#etitle").val(),
+                  edate:$("#edate").val(),
+                  etime:$("#etime").val(),
+                  ecity:$("#ecity").val(),
+                  evenue:$("#evenue").val()
+              }
+          }
+    
+          $.ajax(obj)
+          
+          .done(function(resp)
+          {
+             alert(resp);
+            //  $("#msgSignup").html(resp);
+    
+          })
+          
+          .fail(function(err)
+          {
+              alert(err.statusText);
+          })
+         
+      })
+      //-----------------------------------script for password change-----------------------
+
+      //==================================================================================
+      $("#update-pass").click(function(){
+      //  alert();
+
+            var femail = $("#femail").val();
+            var fopass = $("#fopass").val();
+            var fnpass = $("#fnpass").val();
+
+        var obj = {           //obj creat kiya hai
+          type: "get",
+          url: "/change-password",        //server ch API ka link ready kiya hai
+          data: {
+            femail: femail,
+            fopass:fopass,
+            fnpass:fnpass
+
+          }
+        }
+
+        $.ajax(obj).done(function (respJsonAry) {
+        
+          alert(respJsonAry);
+         }).fail(function (kuchErr) {
+          alert(kuchErr.toString());
+        });
+
+      });
+      // ----------------logout--------------
+      $("#logout").click(function(){
+      localStorage.removeItem("au");
+      location.href="index.html";
+      })
+      })
+      </script>
+    
+    
+</head>
+<body>
+
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="pics/logu.png" alt="Logo" width="30" height="28"  class="d-inline-block align-text-top">
+        Trendsetters Hub
+      </a> 
+     
+        <div class="p-2">               
+           <button class="btn btn-outline" type="button" style="margin-left:10px" 
+          id="logout" >Logout</button>
+        </div>
+      </div>
+    
+    </div >
+
+
+     <div  class="col-12 text-center " style="background-color: rgb(210, 245, 251);"><h1>Influencer deshbord </h1></div>
+    
+  
+
+    <div class="row row justify-content-around">
+      <div class="col-md-3">
+        <div class="card text-center">
+          <img src="pics/user2.jpg" class="card-img-top" alt="..." />
+          <div class="card-body"> 
+            <a href="./inf-form"  target="_top" class="btn btn-primary">profile</a>
+            <span<h5 class="card-title" id="dash">user</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card text-center">
+          <img src="pics/istockphoto-1368745082-612x612.jpg" class="card-img-top" alt="..." />
+          <div class="card-body">
+          
+              <!-- Button trigger modal -->
+       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#book-event">
+         booking 
+       </button>
+       <a href="./booking.html"  target="_top" class="btn btn-primary margin-auto">viwe booking</a>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card text-center" >
+          <img src="pics/182-1828684_machinery-gear-png-photo-mechanical-gear-vector-clipart.png" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <!-- Button trigger settings -->
+<button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#setting">
+  setting
+</button>
+
+          </div>
+        </div>
+      </div>
+
+     
+    </div>
+  </div>
+
+
+<!-- Modal for event booking-->
+<div class="modal fade" id="book-event" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">BookEd Events/Dates</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form class="row g-3">
+          <div class="col-12">
+            <label for="eemail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="eemail" name="eemail" value="abc@123">
+          </div>
+          <div class="col-12">
+            <label for="etitle" class="form-label">Event title</label>
+            <input type="text" class="form-control" id="etitle" name="etitle" value="divya-mhotsav">
+          </div>
+
+          <div class="col-md-4">
+            <label for="edate" class="form-label">date</label>
+            <input type="date" class="form-control" id="edate" name="edate"  placeholder="date" value="05/05/2025">
+          </div>
+
+          <div class="col-md-4">
+            <label for="etime" class="form-label">start time</label>
+            <input type="time" class="form-control" id="etime" name="etime" placeholder="--:--" value="11:00">
+          </div>
+           
+
+          <div class="col-md-6">
+            <label for="eCity" class="form-label">City</label>
+            <input type="text" class="form-control" id="ecity" name="ecity" value="bathinda">
+          </div>
+         
+          <div class="col-md-6">
+            <label for="evenue" class="form-label">venue</label>
+            <input type="text" class="form-control" id="evenue" name="evenue" value="ajit road gali no 17 park">
+          </div>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="post-event" class="btn btn-primary">post Event</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------------------------------------ modal for settings------------------------------------- -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="setting" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="row g-3">
+          <div class="col-md-6">
+            <label for="femail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="femail">
+          </div>
+          <div class="col-md-6">
+            <label for="fopass" class="form-label">old Password</label>
+            <input type="password" class="form-control" id="fopass">
+          </div>
+          <div class="col-md-6">
+            <label for="fnpass" class="form-label">new Password</label>
+            <input type="password" class="form-control" id="fnpass">
+          </div>
+          <!-- <div class="col-md-6">
+            <label for="form-cpass" class="form-label">confirm Password</label>
+            <input type="password" class="form-control" id="form-cpass">
+          </div>
+           -->
+        
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="update-pass" class="btn btn-primary">update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

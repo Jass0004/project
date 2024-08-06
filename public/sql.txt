@@ -1,0 +1,7 @@
+create table influ ( iemail varchar(40) primary key,iname varchar(40),icontact bigint, iaddress varchar(100),istate varchar(30),icity varchar(30),izcode varchar(30), picpath varchar(400), iurl varchar (400), icategory varchar(50) )
+
+create table users (email varchar(40)primary key,pwd varchar(30),utype varchar(30),status int)
+
+create table events (eemail varchar(40),etitle varchar(30),edate date,etime time, ecity varchar(50), evenue varchar(100) )
+
+create table client (cemail varchar(40) primary key,cname varchar(40),ccontact bigint, caddress varchar(100),cstate varchar(30),ccity varchar(30),czcode varchar(30), picpath varchar(400), coccupation varchar(50) );
