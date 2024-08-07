@@ -220,7 +220,7 @@ app.post("/isave",async function(req,resp){                                     
 
 
     let fileName="";
-    if(err!=null)
+    if(err==null)
         {
              fileName=req.files.iprofilePic.name;
             let path=__dirname+"/public/uploads/"+fileName;
@@ -396,29 +396,6 @@ app.get("/search-cprofile", function (req, resp) {                              
     })
 });
 
-
-// ------- post methode just for practic-------------
-
-// app.post("/run",function(req,resp){
-
-//     // console.log("i am come");
-    
-//     // console.log(req.body);
-//     // resp.send(req.body); 
-
-//     let em=req.body.email;
-
-//     mysql.query("insert into example values(?)",[em],function(err){
-
-//                 if(err==null)
-//                     resp.send("done .....");
-//                 else
-//                     resp.send(err.message);
-                
-//           }) 
-    
-    
-// });
 
               
 app.get("/booking-process",function(req,resp)                                                                  //influser shows booking
@@ -693,23 +670,6 @@ app.get("/do-find",function(req,resp)                                           
 
 })
 
-// app.get("/do-find",function(req,resp)
-// {
-
-//     console.log("lol");
-//     console.log(req.query);
-
-//     mysql.query("select * from influ where icity ? ",["%"+req.query.icity+"%"],function(err,resultJsonAry){
-//         if(err!=null)
-//             {
-//                 resp.send(err.message);
-//                 return;
-
-//             }
-//        resp.send(resultJsonAry);
-//     })
-
-// })
 
 app.get("/findInflu",function(req,resp)                                                                           //filter category
 {
