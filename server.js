@@ -264,9 +264,9 @@ app.post("/csave", async function(req,resp){                                    
             .then(function(result){
                 fileName = result.url;
             })
-            .catch(function(err){
+            .catch(function(err){ 
                 console.log(err) 
-                console.log("not ok ")  
+        
              })
         }
         else
@@ -309,7 +309,8 @@ app.post("/ipupdate", async function (req, resp) {                              
             // req.files.iprofilePic.mv(path);
             await cloudinary.uploader.upload(path)
             .then(function(result){
-                fileName = result.url;
+                fileName = result.secure_url;
+                console.log(result)
             })
             .catch(function(err){
                 console.log(err)   
