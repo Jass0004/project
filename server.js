@@ -216,7 +216,7 @@ app.post("/isave",async function(req,resp){                                     
 
     console.log(req.body);
     // resp.send(req.body);
-   mysql.query()
+
 
 
     let fileName="";
@@ -231,7 +231,7 @@ app.post("/isave",async function(req,resp){                                     
                 fileName = result.url;
             })
             .catch(function(err){
-               console.log(err) 
+               console.log(err)   
             })
         }
         else

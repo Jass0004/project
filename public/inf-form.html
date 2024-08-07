@@ -19,15 +19,15 @@
           if (file) {
               imgPrev.src = URL.createObjectURL(file)
           }
-      }
+      }       
   </script>
 
-<script>
+<script>   
   $(document).ready(function()
   {
   //-----------------on load function----------------------------- 
     let active=localStorage.getItem("au");
-    alert(active);  
+    alert(active);    
     $("#iemail").val(active).prop("readonly",true); 
 
     // -----------------
