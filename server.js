@@ -37,10 +37,13 @@ mysql.connect(function(err){
   
  
  cloudinary.config({ 
+    secure: true,
     cloud_name: 'dorkb3maa', 
     api_key: '952954397334735', 
     api_secret:  'qG5pEULVKQnsNjco53JNwHhP4Uo' // Click 'View Credentials' below to copy your API secret
 });
+
+console.log(cloudinary.config());
 
 
 
@@ -305,7 +308,7 @@ app.post("/ipupdate", async function (req, resp) {                              
     if(req.files!=null)
         {
              fileName=req.files.iprofilePic.name;
-            let path=__dirname+"/public/uploads/"+fileName;
+            let path=__dirname+fileName;
             // req.files.iprofilePic.mv(path);
             await cloudinary.uploader.upload(path)
             .then(function(result){
