@@ -265,7 +265,8 @@ app.post("/csave", async function(req,resp){                                    
                 fileName = result.url;
             })
             .catch(function(err){
-                console.log(err)   
+                console.log(err) 
+                console.log("not ok ")  
              })
         }
         else
