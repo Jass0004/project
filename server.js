@@ -214,7 +214,7 @@ app.get("/login-process",function(req,resp)                                     
                                                                                                                      
 app.post("/isave",async function(req,resp){                                                                                  //influencer form data save
 
-    // console.log(req.body);
+    console.log(req.body);
     // resp.send(req.body);
 
 
@@ -233,7 +233,7 @@ app.post("/isave",async function(req,resp){                                     
             })
         }
         else
-        fileName="nopic.jpg";
+        fileName="logo.jpg";
 
     mysql.query("insert into influ values(?,?,?,?,?,?,?,?,?,?)",[req.body.iemail,req.body.iname,req.body.icontact,req.body.iaddress,req.body.istate,req.body.icity,req.body.izcode,fileName,req.body.iurl,req.body.icategory],function(err){
 
