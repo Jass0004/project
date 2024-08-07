@@ -263,8 +263,10 @@ app.post("/csave", async function(req,resp){                                    
             await cloudinary.uploader.upload(path)
             .then(function(result){
                 fileName = result.url;
-
             })
+            .catch(function(err){
+                console.log(err)   
+             })
         }
         else
         fileName="nopic.jpg";
@@ -307,8 +309,10 @@ app.post("/ipupdate", async function (req, resp) {                              
             await cloudinary.uploader.upload(path)
             .then(function(result){
                 fileName = result.url;
-
             })
+            .catch(function(err){
+                console.log(err)   
+             })
             console.log("pic update success....");
         }
         else
@@ -349,8 +353,10 @@ app.post("/cpupdate", async function (req, resp) {                              
             await cloudinary.uploader.upload(path)
             .then(function(result){
                 fileName = result.url;
-
             })
+            .catch(function(err){
+                console.log(err)   
+             })
             console.log("pic update success....");
         }
         else
