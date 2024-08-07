@@ -220,7 +220,7 @@ app.post("/isave",async function(req,resp){                                     
 
 
     let fileName="";
-    if(err==null)
+    if(req.files!=null)
         {
              fileName=req.files.iprofilePic.name;
             let path=__dirname+"/public/uploads/"+fileName;
@@ -253,7 +253,7 @@ app.post("/csave", async function(req,resp){                                    
 
 
     let fileName="";
-    if(err!=null)
+    if(req.files!=null)
         {
              fileName=req.files.cprofilePic.name;
             let path=__dirname+"/public/uploads/"+fileName;
