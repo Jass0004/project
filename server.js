@@ -5,8 +5,10 @@ let mysql2=require("mysql2");
 var fileuploader=require("express-fileupload");
 var cloudinary=require("cloudinary").v2;
 
+ 
+
 // ----------------------------------------------second step-------------------------
-let app= express();
+let app= express();       
 app.listen(2024,function(req,resp)
 {
     console.log("Your server started --🟢");
@@ -34,7 +36,7 @@ mysql.connect(function(err){
     else
      console.log(err.message); 
 }) 
-  
+   
  
  cloudinary.config({ 
     secure: true,
@@ -43,15 +45,18 @@ mysql.connect(function(err){
     api_secret:  'qG5pEULVKQnsNjco53JNwHhP4Uo' // Click 'View Credentials' below to copy your API secret
 });
 
-console.log(cloudinary.config());
+// console.log(cloudinary.config());
 
 
 
 // ----------------------------------------------fourth step----------------------------------
 app.use(express.static("public"));
 app.use(express.urlencoded("true"));
-app.use(fileuploader());
+// app.use(fileuploader());
 
+app.use(fileuploader({
+    useTempFiles:true
+}))
 
 
 // ---------------------------------------------page loders-------------------------------------
@@ -226,6 +231,7 @@ app.post("/isave",async function(req,resp){                                     
     if(req.files!=null)
         {
              fileName=req.files.iprofilePic.name;
+
             let path=__dirname+"/public/uploads/"+fileName;
             // req.files.iprofilePic.mv(path);
 
@@ -259,7 +265,7 @@ app.post("/csave", async function(req,resp){                                    
 
     let fileName="";
     if(req.files!=null)
-        {
+        { 
              fileName=req.files.cprofilePic.name;
             let path=__dirname+"/public/uploads/"+fileName;
             // req.files.cprofilePic.mv(path);
@@ -304,19 +310,31 @@ app.get("/search-iprofile", function (req, resp) {                              
 // ------------------------------------------------------------------
 app.post("/ipupdate", async function (req, resp) {                                                                          //influcer data update in form 
   
+    console.log(req.files.iprofilePic);
+    const file = req.files.iprofilePic;
+    // cloudinary.uploader.upload(file.tempFilePath,(err,result)=>{
+    //     console.log(result);
+
+    // })
     let fileName="";
+
     if(req.files!=null)
         {
-             fileName=req.files.iprofilePic.name;
-            let path=__dirname+fileName;
+                   
+             fileName=req.files.iprofilePic.name
+
+            // var path=__dirname+"/public/uploads/"+fileName;
+            console.log(req.files.path);
             // req.files.iprofilePic.mv(path);
-            await cloudinary.uploader.upload(path)
+            
+            await cloudinary.uploader.upload(file.tempFilePath)  
             .then(function(result){
-                fileName = result.secure_url;
-                console.log(result)
-            })
-            .catch(function(err){
-                console.log(err)   
+                fileName=result.secure_url;
+                console.log(result) 
+            })  
+            .catch(function(err){ 
+                
+                console.log(err)    
              })
             console.log("pic update success....");
         }
