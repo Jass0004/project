@@ -4,6 +4,7 @@ var express=require("express");
 let mysql2=require("mysql2");
 var fileuploader=require("express-fileupload");
 var cloudinary=require("cloudinary").v2;
+var fs = require("fs-extra");
 
  
 
@@ -224,24 +225,34 @@ app.post("/isave",async function(req,resp){                                     
 
     console.log(req.body);
     // resp.send(req.body);
+    const file = req.files.iprofilePic;
 
 
 
     let fileName="";
     if(req.files!=null)
         {
-             fileName=req.files.iprofilePic.name;
+            //  fileName=req.files.iprofilePic.name;
 
-            let path=__dirname+"/public/uploads/"+fileName;
+            // let path=__dirname+"/public/uploads/"+fileName;
             // req.files.iprofilePic.mv(path);
 
-           await cloudinary.uploader.upload(path)
+           await cloudinary.uploader.upload(file.tempFilePath)
             .then(function(result){
                 fileName = result.url;
             })
             .catch(function(err){
                console.log(err)   
             })
+              
+            fs.unlink(file.tempFilePath)
+            .then(() => {
+               console.log('Temporary file deleted');
+             })
+             .catch(err => {
+               console.error('Error deleting temporary file:', err);
+             });
+
         }
         else
         fileName="logo.jpg";
@@ -262,14 +273,15 @@ app.post("/csave", async function(req,resp){                                    
     // resp.send(req.body);
 
 
+    const file = req.files.cprofilePic;
 
     let fileName="";
     if(req.files!=null)
         { 
-             fileName=req.files.cprofilePic.name;
-            let path=__dirname+"/public/uploads/"+fileName;
+            //  fileName=req.files.cprofilePic.name;
+            // let path=__dirname+"/public/uploads/"+fileName;
             // req.files.cprofilePic.mv(path);
-            await cloudinary.uploader.upload(path)
+            await cloudinary.uploader.upload(file.tempFilePath)
             .then(function(result){
                 fileName = result.url;
             })
@@ -277,6 +289,14 @@ app.post("/csave", async function(req,resp){                                    
                 console.log(err) 
         
              })
+
+             fs.unlink(file.tempFilePath)
+             .then(() => {
+                console.log('Temporary file deleted');
+              })
+              .catch(err => {
+                console.error('Error deleting temporary file:', err);
+              });
         }
         else
         fileName="nopic.jpg";
@@ -310,18 +330,14 @@ app.get("/search-iprofile", function (req, resp) {                              
 // ------------------------------------------------------------------
 app.post("/ipupdate", async function (req, resp) {                                                                          //influcer data update in form 
   
-    console.log(req.files.iprofilePic);
+    // console.log(req.files.iprofilePic);
     const file = req.files.iprofilePic;
-    // cloudinary.uploader.upload(file.tempFilePath,(err,result)=>{
-    //     console.log(result);
-
-    // })
     let fileName="";
 
     if(req.files!=null)
         {
                    
-             fileName=req.files.iprofilePic.name
+            //  fileName=req.files.iprofilePic.name
 
             // var path=__dirname+"/public/uploads/"+fileName;
             console.log(req.files.path);
@@ -332,10 +348,21 @@ app.post("/ipupdate", async function (req, resp) {                              
                 fileName=result.secure_url;
                 console.log(result) 
             })  
-            .catch(function(err){ 
+            .catch(function(err){  
                 
                 console.log(err)    
              })
+
+             fs.unlink(file.tempFilePath)
+             .then(() => {
+                console.log('Temporary file deleted');
+              })
+              .catch(err => {
+                console.error('Error deleting temporary file:', err);
+              });
+
+
+
             console.log("pic update success....");
         }
         else
@@ -368,19 +395,30 @@ mysql.query("update influ set iname=?,icontact=?,iaddress=?,istate=?,icity=?,izc
 
 app.post("/cpupdate", async function (req, resp) {                                                                        //client data update throgh form
 
+    const file = req.files.cprofilePic;
+
     let fileName="";
     if(req.files!=null)
         {
-             fileName=req.files.cprofilePic.name;
-            let path=__dirname+"/public/uploads/"+fileName;
+            //  fileName=req.files.cprofilePic.name;
+            // let path=__dirname+"/public/uploads/"+fileName;
             // req.files.cprofilePic.mv(path);
-            await cloudinary.uploader.upload(path)
+            await cloudinary.uploader.upload(file.tempFilePath)
             .then(function(result){
                 fileName = result.url;
             })
             .catch(function(err){
                 console.log(err)   
              })
+
+             fs.unlink(file.tempFilePath)
+             .then(() => {
+                console.log('Temporary file deleted');
+              })
+              .catch(err => {
+                console.error('Error deleting temporary file:', err);
+              });
+
             console.log("pic update success....");
         }
         else
