@@ -239,7 +239,7 @@ app.post("/isave",async function(req,resp){                                     
 
            await cloudinary.uploader.upload(file.tempFilePath)
             .then(function(result){
-                fileName = result.url;
+                fileName = result.secure_url;
             })
             .catch(function(err){
                console.log(err)   
@@ -283,7 +283,7 @@ app.post("/csave", async function(req,resp){                                    
             // req.files.cprofilePic.mv(path);
             await cloudinary.uploader.upload(file.tempFilePath)
             .then(function(result){
-                fileName = result.url;
+                fileName = result.secure_url;
             })
             .catch(function(err){ 
                 console.log(err) 
@@ -405,7 +405,7 @@ app.post("/cpupdate", async function (req, resp) {                              
             // req.files.cprofilePic.mv(path);
             await cloudinary.uploader.upload(file.tempFilePath)
             .then(function(result){
-                fileName = result.url;
+                fileName = result.secure_url;
             })
             .catch(function(err){
                 console.log(err)   
