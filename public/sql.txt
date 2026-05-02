@@ -4,4 +4,4 @@ create table users (email varchar(40)primary key,pwd varchar(30),utype varchar(3
 
 create table events (eemail varchar(40),etitle varchar(30),edate date,etime time, ecity varchar(50), evenue varchar(100) )
 
-create table client (cemail varchar(40) primary key,cname varchar(40),ccontact bigint, caddress varchar(100),cstate varchar(30),ccity varchar(30),czcode varchar(30), picpath varchar(400), coccupation varchar(50) );
+create table client (cemail varchar(40) primary key,cname varchar(40),ccontact bigint, caddress varchar(100),cstate varchar(30),ccity varchar(30),czcode varchar(30), picpath varchar(400), coccupation varchar(50)

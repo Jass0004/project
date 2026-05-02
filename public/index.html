@@ -200,7 +200,52 @@ if(regularExpression.test(pwd)==true)
         $("#errCombo").html("*")
 
 
-   })     
+   })  
+   
+   // ================= LOAD UPCOMING EVENTS =================
+function loadUpcomingEvents()
+{
+    $.ajax({
+        type: "get",
+        url: "/api/upcoming-events"
+    })
+    .done(function(data)
+    {
+        $("#eventContainer").html("");
+
+        if(data.length == 0){
+            $("#eventContainer").html("<h5 class='text-center'>No upcoming events 😔</h5>");
+            return;
+        }
+
+        data.forEach(function(event)
+        {
+            let card = `
+            <div class="col-md-4 mb-4">
+                <div class="card shadow border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="text-primary">${event.etitle}</h5>
+                        <p><b>📧 Influencer:</b> ${event.eemail}</p>
+                        <p><b>📅 Date:</b> ${event.edate}</p>
+                        <p><b>⏰ Time:</b> ${event.etime}</p>
+                        <p><b>📍 City:</b> ${event.ecity}</p>
+                        <p><b>🏟 Venue:</b> ${event.evenue}</p>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            $("#eventContainer").append(card);
+        });
+    })
+    .fail(function(err)
+    {
+        alert("Error loading events");
+    });
+}
+
+// CALL FUNCTION
+loadUpcomingEvents();
             
 });
 
@@ -293,7 +338,17 @@ if(regularExpression.test(pwd)==true)
   </div>
 </div>
   
+<!-- //------------------- -->
+<!-- ================= UPCOMING EVENTS ================= -->
+<section class="container mt-5">
+  <div class="text-center mb-4">
+    <h2>🔥 Upcoming Events</h2>
+    <p class="text-muted">See what influencers are organizing</p>
+  </div>
 
+  <div class="row" id="eventContainer"></div>
+</section>
+<!-- //------------------- -->
 
 
 <figure class="text-center">

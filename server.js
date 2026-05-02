@@ -818,4 +818,25 @@ app.get("/check-user-existance",function(req,resp)
 
 })
 
+// ================= UPCOMING EVENTS API =================
+app.get("/api/upcoming-events", function(req, resp)
+{
+    let query = `
+        SELECT * FROM events 
+        WHERE edate >= CURDATE() 
+        ORDER BY edate ASC, etime ASC
+    `;
+
+    mysql.query(query, function(err, result)
+    {
+        if(err != null)
+        {
+            resp.status(500).send(err.message);
+            return;
+        }
+
+        resp.json(result);
+    });
+});
+
 
