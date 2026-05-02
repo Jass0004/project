@@ -8,9 +8,113 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script> -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
 
+/* ================= GLOBAL BACKGROUND ================= */
+body {
+   background: linear-gradient(135deg, #d6dcff, #eef2ff);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ================= HERO ================= */
+.hero-section {
+  background: linear-gradient(135deg, #e0e7ff, #f4f6ff);
+  border-bottom: 2px solid #e0e3ff;
+}
+
+/* ================= SECTION BOX ================= */
+.section-box {
+  background: #ffffff;
+  border: 1px solid #e0e3ff;
+  margin-top: 40px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+/* ================= HEADING LINE ================= */
+.section-line {
+  width: 100%;
+  height: 2px;
+  background: #e0e3ff;
+  margin: 10px auto;
+}
+
+/* ================= CARD ================= */
+.custom-card {
+  background: #ffffff;
+  border: 1px solid #e6e9ff;
+  transition: 0.25s;
+}
+
+.custom-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ================= EVENT HEADER ================= */
+.event-header {
+  background: #eef1ff;
+  border-bottom: 1px solid #e0e3ff;
+  color: #4f6ef7;
+}
+
+/* ================= SMALL BOX ROW ================= */
+.info-row {
+  background: #f9faff;
+}
+
+/* ================= VENUE BOX ================= */
+.venue-box {
+  background: #f4f6ff;
+  border-top: 1px solid #e0e3ff;
+}
+
+/* ================= TEAM ================= */
+.team-card {
+  background: #ffffff;
+  border: 1px solid #e0e3ff;
+}
+
+/* mentor */
+.mentor-card {
+  background: #fffdf5;
+  border: 1px solid #ffd966;
+}
+
+/* ================= MAP ================= */
+.map-container {
+  background: #ffffff;
+  border: 1px solid #e0e3ff;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  background: #f8f9ff;
+  border-top: 1px solid #e0e3ff;
+}
+
+</style>
     
     <script>
+      function formatDate(dateStr) {
+  let date = new Date(dateStr);
+
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+function formatTime(timeStr) {
+  // handles both "10:00 AM" and "10:00:00"
+  let date = new Date("1970-01-01T" + timeStr);
+
+  return date.toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
+}
+
       $(document).ready(function()
       {
         let e=false, p=false , c=false ;
@@ -220,21 +324,65 @@ function loadUpcomingEvents()
 
         data.forEach(function(event)
         {
-            let card = `
-            <div class="col-md-4 mb-4">
-                <div class="card shadow border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="text-primary">${event.etitle}</h5>
-                        <p><b>📧 Influencer:</b> ${event.eemail}</p>
-                        <p><b>📅 Date:</b> ${event.edate}</p>
-                        <p><b>⏰ Time:</b> ${event.etime}</p>
-                        <p><b>📍 City:</b> ${event.ecity}</p>
-                        <p><b>🏟 Venue:</b> ${event.evenue}</p>
-                    </div>
-                </div>
-            </div>
-            `;
+      let card = `
+<div class="col-md-4 mb-4">
+  <div class="card h-100 border-0 shadow-sm"
+       style="background:#ffffff; border:1px solid #e6e9ff; overflow:hidden;">
 
+    <!-- header strip -->
+    <div style="background:#eef1ff; padding:10px 15px; border-bottom:1px solid #e0e3ff;">
+      <h6 class="fw-bold mb-0" style="color:#4f6ef7;">
+        ${event.etitle}
+      </h6>
+    </div>
+
+    <div class="card-body">
+
+      <div class="small">
+
+        <!-- Date -->
+        <div class="d-flex justify-content-between align-items-center mb-2 p-2"
+             style="background:#f9faff;">
+          <span style="color:#6c757d;">Date</span>
+          <span class="fw-semibold" style="color:#4f6ef7;">
+            ${formatDate(event.edate)}
+          </span>
+        </div>
+
+        <!-- Time -->
+        <div class="d-flex justify-content-between align-items-center mb-2 p-2"
+             style="background:#f9faff;">
+          <span style="color:#6c757d;">Time</span>
+          <span class="fw-semibold" style="color:#20c997;">
+            ${formatTime(event.etime)}
+          </span>
+        </div>
+
+        <!-- City -->
+        <div class="d-flex justify-content-between align-items-center mb-2 p-2"
+             style="background:#f9faff;">
+          <span style="color:#6c757d;">City</span>
+          <span class="fw-semibold" style="color:#fd7e14;">
+            ${event.ecity}
+          </span>
+        </div>
+
+        <!-- Venue -->
+        <div class="mt-3 p-2"
+             style="background:#f4f6ff; border-top:1px solid #e0e3ff;">
+          <span class="small" style="color:#6c757d;">Venue</span>
+          <p class="mb-0 small fw-medium" style="color:#444;">
+            ${event.evenue}
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+`;
             $("#eventContainer").append(card);
         });
     })
@@ -256,168 +404,360 @@ loadUpcomingEvents();
   
 <body>
   
-  <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="pics/logu.png" alt="Logo" width="30" height="28"  class="d-inline-block align-text-top">
-        Trendsetters Hub
-      </a> 
-      <div class="d-flex flex-row-reverse">
-        <div class="p-2">
-          <a href="#s1"><button class="btn btn-outline"  type="button" 
-           >Our Service</button></a>
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg bg-light border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">
+      <img src="pics/logu.png" width="30"> Trendsetters Hub
+    </a>
 
-        </div>
-        <div class="p-2">                
-          <button class="btn btn-outline" type="button" data-bs-toggle="modal"
-          data-bs-target="#exampleModal" >Signup</button>
-        </div>
-        <div class="p-2">               
-           <button class="btn btn-outline" type="button" style="margin-left:10px" 
-          data-bs-target="#exampleModallog"  data-bs-toggle="modal" >Login</button>
-        </div>
-      </div>
-    
-    </div>
-    
-  </nav>
-  <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active" data-bs-interval="3000">
-        <img src="pics/Studio Shodwe.png"  class="d-block w-100"  >
-      </div>
-      <div class="carousel-item" data-bs-interval="500">
-        <img src="pics/Yellow Illustrative Web Design Promotion Banner.png" class="d-block w-100" alt="...">
-      </div>
-      
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-  <figure class="text-center">
-  <h3 id="s1">
-    OUR
-    <small class="text-body-secondary">SERVICE</small>
-  </h3>
-</figure>
-<div class="container-fluid">
 
-<div class="container text-center">
-  <div class="row justify-content-around">
-      <div class="col-lg-3 col-md-auto col-auto">
-          <div class="card"style="width: 18rem;">
-              <img src="pics/black white simple discount logo.gif" class="card-img-top" alt="...">
-              
-            </div>
-          
-        
-      </div>
-      <div class="col-lg-3 col-md-auto col-auto">
-          <div class="card"style="width: 18rem;">
-              <img src="pics/black white simple discount logo (1).gif" class="card-img-top" alt="...">
-              
-            </div>
-          
-          
-    
-      </div>
-      <div class="col-lg-3 col-md-auto col-auto">
-          <div class="card"style="width: 18rem;">
-              <img src="pics/black white simple discount logo (2).gif" class="card-img-top" alt="...">
-             
-            </div>
-          
-        
+    <div class="collapse navbar-collapse justify-content-end" id="nav">
+      <div class="d-flex gap-2 mt-2 mt-lg-0">
+        <a href="#s1" class="btn btn-outline-secondary btn-sm">Service</a>
+        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Signup</button>
+        <button class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModallog">Login</button>
       </div>
     </div>
   </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<div class="container-fluid py-5" style="background:#f4f6ff; border-bottom:2px solid #e0e3ff;">
+
+  <div class="container text-center">
+
+    <!-- badge -->
+    <span class="badge mb-3" style="background:#e0e3ff; color:#4f6ef7;">
+      Influencer Platform
+    </span>
+
+    <!-- heading -->
+    <h1 class="fw-bold mb-3">
+      Connect Brands <span style="color:#4f6ef7;">with Influencers</span>
+    </h1>
+
+    <!-- subtitle -->
+    <p class="text-muted mb-4">
+      Build strong collaborations and grow your business with trusted creators.
+    </p>
+
+    <!-- buttons -->
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+      <button class="btn btn-sm px-4" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background:#4f6ef7; color:white;">
+        Get Started
+      </button>
+
+     
+
+    </div>
+
+    <!-- stats -->
+    <div class="row mt-5 text-center">
+
+      <div class="col-4">
+        <h6 class="fw-bold mb-0" style="color:#4f6ef7;">500+</h6>
+        <small class="text-muted">Influencers</small>
+      </div>
+
+      <div class="col-4">
+        <h6 class="fw-bold mb-0" style="color:#4f6ef7;">300+</h6>
+        <small class="text-muted">Brands</small>
+      </div>
+
+      <div class="col-4">
+        <h6 class="fw-bold mb-0" style="color:#4f6ef7;">1K+</h6>
+        <small class="text-muted">Campaigns</small>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
-  
-<!-- //------------------- -->
-<!-- ================= UPCOMING EVENTS ================= -->
-<section class="container mt-5">
-  <div class="text-center mb-4">
-    <h2>🔥 Upcoming Events</h2>
-    <p class="text-muted">See what influencers are organizing</p>
-  </div>
 
-  <div class="row" id="eventContainer"></div>
+<!-- ================= SERVICES ================= -->
+<section class="container py-5" id="s1">
+
+  <!-- heading -->
+ <div class="text-center mb-5">
+  <h3 class="fw-bold">OUR SERVICE</h3>
+
+  <hr class="w-100 my-3">
+
+  <p class="text-muted small">What we offer to grow your brand</p>
+</div>
+  <div class="row g-4">
+
+    <!-- CARD 1 -->
+    <div class="col-6 col-md-4">
+      <div class="border bg-white text-center d-flex flex-column justify-content-center align-items-center p-2"
+           style="aspect-ratio:1/1; border-color:#e0e3ff;">
+
+        <img src="pics/black white simple discount logo.gif"
+             class="img-fluid"
+             style="height:200px; object-fit:contain;">
+
+        <h6 class="fw-bold mt-2 mb-0">Promotion</h6>
+
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="col-6 col-md-4">
+      <div class="border bg-white text-center d-flex flex-column justify-content-center align-items-center p-2"
+           style="aspect-ratio:1/1; border-color:#e0e3ff;">
+
+        <img src="pics/black white simple discount logo (1).gif"
+             class="img-fluid"
+             style="height:200px; object-fit:contain;">
+
+        <h6 class="fw-bold mt-2 mb-0">Marketing</h6>
+
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="col-6 col-md-4">
+      <div class="border bg-white text-center d-flex flex-column justify-content-center align-items-center p-2"
+           style="aspect-ratio:1/1; border-color:#e0e3ff;">
+
+        <img src="pics/black white simple discount logo (2).gif"
+             class="img-fluid"
+             style="height:200px; object-fit:contain;">
+
+        <h6 class="fw-bold mt-2 mb-0">Campaigns</h6>
+
+      </div>
+    </div>
+
+  </div>
 </section>
-<!-- //------------------- -->
+
+<!-- ================= EVENTS ================= -->
+<section class="container py-5" style="background:#f8f9ff; border:1px solid #e0e3ff;">
+
+  <div class="text-center mb-5">
+    <h3 class="fw-bold">Upcoming Events</h3>
+    <hr class="w-100" style="border-top:2px solid #e0e3ff;">
+    <p class="text-muted small">Latest influencer activities</p>
+  </div>
+
+  <div class="row g-4" id="eventContainer"></div>
+
+</section>
 
 
-<figure class="text-center">
-    <h3>
-      OUR
-      <small class="text-body-secondary">TEAM</small>
-    </h3>
-  </figure>
-  <div class="container-fluid">
-    <div class="container text-center" >
-    <div class=" row justify-content-around" >
-        
-        <div class="col-lg-4 col-md-auto col-auto" >
-          <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="pics/IMG_20240725_141127.jpg" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Rajesh Bansal</h5>
-                  <p class="card-text"><small class="text-body-secondary">Founder of BCE</small></p>
-                 
-                </div>
-              </div>
-            </div>
-          </div>
-            
+<!-- ================= TEAM ================= -->
+<section class="container py-5 mt-5" style="background:#f8f9ff; border:1px solid #e0e3ff;">
 
-        </div>
-        
-        <div class="col-lg-4 col-md-auto col-auto">
-            
-          <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="pics/IMG_20240725_141436.jpg" class="img-fluid rounded-start" alt="...">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Jaswinder Singh</h5>
-                  <p class="card-text"><small class="text-body-secondary">computers science Engg</small></p>
-                 
-                </div>
-              </div>
-            </div>
+  <div class="text-center mb-5">
+    <h3 class="fw-bold">OUR TEAM</h3>
+    <hr class="w-100" style="border-top:2px solid #e0e3ff;">
+    <p class="text-muted small">People behind this project</p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- MENTOR -->
+    <div class="col-12 col-md-6">
+      <div class="h-100 d-flex border shadow-sm"
+           style="border-color:#ffd966; background:#fffdf5;">
+
+        <!-- gold strip -->
+        <div style="width:5px; background:#4f6ef7;"></div>
+
+        <div class="d-flex p-3 w-100 align-items-center">
+
+          <div class="me-3">
+            <img src="pics/IMG_20240725_141127.jpg"
+                 style="height:100px; width:100px; object-fit:cover; border:2px solid #e0e3ff;">
           </div>
 
-            
+          <div>
+            <h6 class="fw-bold mb-1" style="color:#2d2f4a;">
+              Rajesh Bansal
+            </h6>
+
+            <span class="badge mb-2" style="background:#eef1ff; color:#4f6ef7;">
+              Mentor
+            </span>
+
+            <p class="small mb-0" ">
+              Guiding and supporting the development of this project
+            </p>
+          </div>
+
         </div>
+      </div>
     </div>
-</div>
-</div>
 
+    <!-- YOU -->
+    <div class="col-12 col-md-6">
+      <div class="h-100 d-flex border shadow-sm"
+           style="border-color:#e0e3ff; background:#ffffff;">
 
+        <!-- blue strip -->
+        <div style="width:5px; background:#4f6ef7;"></div>
 
+        <div class="d-flex p-3 w-100 align-items-center">
 
-  
-  <figure class="text-center">
-    <h3>
-      REACH
-      <small class="text-body-secondary">US</small>
-    </h3>
-  </figure>
-  <div class="text-center">
-  <iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8807340362614!2d74.9497531753975!3d30.211951274839702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1717484314100!5m2!1sen!2sin" width="500" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
+          <div class="me-3">
+            <img src="pics/IMG_20240725_141436.jpg"
+                 style="height:100px; width:100px; object-fit:cover; border:2px solid #e0e3ff;">
+          </div>
 
+          <div>
+            <h6 class="fw-bold mb-1" style="color:#2d2f4a;">
+              Jaswinder Singh
+            </h6>
 
+            <span class="badge mb-2" style="background:#eef1ff; color:#4f6ef7;">
+              Developer
+            </span>
+
+            <p class="small text-muted mb-0">
+              Designed and developed the full platform
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ================= MAP ================= -->
+<section class="container py-5 mt-5" style="background:#f8f9ff; border:1px solid #e0e3ff;">
+
+  <!-- heading -->
+  <div class="text-center mb-5">
+    <h3 class="fw-bold">REACH US</h3>
+    <div class="mx-auto my-2" style="width:100%; height:2px; background:#e0e3ff;"></div>
+    <p class="text-muted small">Find us easily at our location</p>
+  </div>
+
+  <div class="row g-0 border shadow-sm" style="border-color:#e0e3ff; background:#ffffff;">
+
+    <!-- MAP -->
+    <div class="col-12 col-md-7">
+      <div class="h-100">
+        <div class="ratio ratio-16x9 h-100">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3447.8807340362614!2d74.9497531753975!3d30.211951274839702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391732a4f07278a9%3A0x4a0d6293513f98ce!2sBanglore%20Computer%20Education!5e0!3m2!1sen!2sin!4v1717484314100!5m2!1sen!2sin"></iframe>                  style="border:0;" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="col-12 col-md-5 d-flex align-items-center">
+      <div class="p-4 w-100">
+
+        <h6 class="fw-bold mb-4" style="color:#2d2f4a;">
+          Contact Information
+        </h6>
+
+        <!-- address -->
+        <div class="mb-3">
+          <small class="text-muted d-block">Address</small>
+          <span style="color:#333;">
+            Banglore Computer Education,<br>
+            Punjab, India
+          </span>
+        </div>
+
+        <!-- phone -->
+        <div class="mb-3">
+          <small class="text-muted d-block">Phone</small>
+          <span style="color:#4f6ef7; font-weight:500;">
+            +91 XXXXX XXXXX
+          </span>
+        </div>
+
+        <!-- email -->
+        <div class="mb-4">
+          <small class="text-muted d-block">Email</small>
+          <span style="color:#4f6ef7; font-weight:500;">
+            info@trendsetters.com
+          </span>
+        </div>
+
+        <!-- button -->
+        <a href="#" class="btn btn-sm w-100"
+           style="background:#4f6ef7; color:white; border:none;">
+          Get Directions
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="mt-5" style="background:#f8f9ff; border-top:1px solid #e0e3ff;">
+
+  <div class="container py-5">
+
+    <div class="row g-4">
+
+      <!-- BRAND -->
+      <div class="col-12 col-md-4">
+        <h6 class="fw-bold" style="color:#2d2f4a;">
+          Trendsetters Hub
+        </h6>
+        <p class="small text-muted mb-0">
+          A platform connecting brands with influencers for effective collaborations.
+        </p>
+      </div>
+
+      <!-- QUICK LINKS -->
+      <div class="col-6 col-md-2">
+        <h6 class="fw-bold small mb-3">Links</h6>
+        <ul class="list-unstyled small">
+          <li><a href="#s1" class="text-muted text-decoration-none">Services</a></li>
+          <li><a href="#" class="text-muted text-decoration-none">Events</a></li>
+          <li><a href="#" class="text-muted text-decoration-none">Team</a></li>
+        </ul>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="col-6 col-md-3">
+        <h6 class="fw-bold small mb-3">Contact</h6>
+        <p class="small text-muted mb-1">Punjab, India</p>
+        <p class="small text-muted mb-1">+91 XXXXX XXXXX</p>
+        <p class="small text-muted mb-0">info@trendsetters.com</p>
+      </div>
+
+      <!-- SOCIAL -->
+      <div class="col-12 col-md-3">
+        <h6 class="fw-bold small mb-3">Follow</h6>
+
+        <div class="d-flex gap-2">
+          <a href="#" class="btn btn-sm border" style="border-color:#e0e3ff;">LinkedIn</a>
+          <a href="#" class="btn btn-sm border" style="border-color:#e0e3ff;">Instagram</a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- bottom bar -->
+  <div class="text-center py-3" style="border-top:1px solid #e0e3ff;">
+    <small class="text-muted">
+      © 2026 Trendsetters Hub. All rights reserved.
+    </small>
+  </div>
+
+</footer>
+
+<!--//------------------- -->
   
       <!-- Button trigger modal -->
 
